@@ -323,7 +323,7 @@ impl Scroller {
 }
 
 #[derive(Clone, Copy)]
-enum Command {
+pub enum Command {
     SoftwareReset = 0x01,
     MemoryAccessControl = 0x36,
     PixelFormatSet = 0x3a,
