@@ -166,12 +166,12 @@ impl<IFACE, RESET> Ili9341<IFACE, RESET>
 where
     IFACE: WriteOnlyDataCommand,
 {
-    fn command(&mut self, cmd: Command, args: &[u8]) -> Result {
+    pub fn command(&mut self, cmd: Command, args: &[u8]) -> Result {
         self.interface.send_commands(U8Iter(&mut once(cmd as u8)))?;
         self.interface.send_data(U8Iter(&mut args.iter().cloned()))
     }
 
-    fn write_iter<I: IntoIterator<Item = u16>>(&mut self, data: I) -> Result {
+    pub fn write_iter<I: IntoIterator<Item = u16>>(&mut self, data: I) -> Result {
         self.command(Command::MemoryWrite, &[])?;
         self.interface.send_data(U16BEIter(&mut data.into_iter()))
     }
@@ -334,4 +334,5 @@ enum Command {
     MemoryWrite = 0x2c,
     VerticalScrollDefine = 0x33,
     VerticalScrollAddr = 0x37,
+    DisplayInvertionOn = 0x21
 }
